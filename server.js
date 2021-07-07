@@ -18,7 +18,7 @@ mongoose
     useFindAndModify: false,
     useUnifiedTopology: true,
   })
-  .then(conn => {
+  .then(() => {
     console.log(`DB Connection successful`);
   });
 

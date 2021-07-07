@@ -17,7 +17,7 @@ app.use(express.json());
 //Our own middle ware
 //Note that 3rd party middlewares like express.json() returns the very same callback used below (req,res,next => ....)
 app.use((req, res, next) => {
-  console.log('Hello from the middleware!! 😊😊😊');
+  // console.log('Hello from the middleware!! 😊😊😊');
   next();
 });
 
