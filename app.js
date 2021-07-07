@@ -6,7 +6,7 @@ const userRouter = require('./routes/userRoutes');
 
 const app = express();
 
-//1) Middleware stack (3rd party / self-defined)
+//1) Middleware stack
 
 //Automactically logs request details to console (E.g. GET /api/v1/tours 200 2.253 ms - 8618)
 if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
@@ -25,13 +25,6 @@ app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
   next();
 });
-
-//Routes
-// app.get('/api/v1/tours', getAllTours);
-// app.get('/api/v1/tours/:id', getTour);
-// app.post('/api/v1/tours', createTour);
-// app.patch(`/api/v1/tours/:id`, updateTour);
-// app.delete('/api/v1/tours/:id', deleteTour);
 
 //3) Routes
 //Mounting routers on a route
