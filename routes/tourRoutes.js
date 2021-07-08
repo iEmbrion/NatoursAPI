@@ -8,6 +8,12 @@ const router = express.Router();
 //   next();
 // });
 
+router.route('/stats').get(tourController.getTourStats);
+router.route('/monthly-plan/:year').get(tourController.getMonthlyPlan);
+router
+  .route('/top5Tours')
+  .get(tourController.aliasTopTours, tourController.getAllTours);
+
 router
   .route('/')
   .get(tourController.getAllTours)
