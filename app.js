@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express'); //Framework to simplify coding
 const morgan = require('morgan'); //Use for logging
 const rateLimit = require('express-rate-limit'); //Prevent DDoS
@@ -14,8 +15,13 @@ const reviewRouter = require('./routes/reviewRoutes');
 
 const app = express();
 
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
+
 //1) Middleware stack
 
+//Serving static files
+app.use(express.static(path.join(__dirname, 'public')));
 //Set security HTTP headers
 app.use(helmet());
 
@@ -60,8 +66,6 @@ app.use(
   })
 );
 
-//Serving static files
-app.use(express.static(`${__dirname}/public`));
 //Our own middle ware
 //Note that 3rd party middlewares like express.json() returns the very same callback used below (req,res,next => ....)
 
@@ -72,7 +76,26 @@ app.use((req, res, next) => {
 });
 
 //3) Routes
-//Mounting routers on a route
+app.get('/', (req, res) => {
+  res.status(200).render('base', {
+    tour: 'The Forest Hiker',
+    user: 'Gary',
+  });
+});
+
+app.get('/overview', (req, res) => {
+  res.status(200).render('overview', {
+    title: 'All Tours',
+  });
+});
+
+app.get('/tour', (req, res) => {
+  res.status(200).render('tour', {
+    title: 'The Forest Hiker Tour',
+  });
+});
+
+//API Routes
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
