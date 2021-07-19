@@ -1,20 +1,25 @@
 doctype html 
 html 
     head 
-        meta(charset='UTF-8')
-        meta(name='viewport' content='width=device-width, initial-scale=1.0')
-        title Natours | Exciting tours for adventurous people
-        link(rel='stylesheet' href='css/style.css')
-        link(rel='shortcut icon' type='image/png' href='img/favicon.png')
-        link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
-    
+        //block for .pugs who extends this file to append resources to the head (e.g. scripts)
+        block head
+            meta(charset='UTF-8')
+            meta(name='viewport' content='width=device-width, initial-scale=1.0')
+            link(rel='stylesheet' href='/css/style.css')
+            link(rel='shortcut icon' type='image/png' href='img/favicon.png')
+            link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
+            title Natours | #{title}
+            script(src='/js/bundle.js' defer)
+            //- script(src='/js/login.js' defer)
+            //- script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js' defer)
+        
     body 
         // HEADER
         include _header
 
         // CONTENT
-        main.main 
-            h1= tour 
+        block content 
+            h1 This is a placeholder header
 
         // FOOTER
         include _footer

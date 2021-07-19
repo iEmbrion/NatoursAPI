@@ -7,9 +7,11 @@ const tourSchema = new mongoose.Schema(
     name: {
       type: String,
       required: [true, 'A tour must have a name'],
-      trim: true,
       unique: true,
-      // validate: [validator.isAlpha, 'Tour name must only contain characters'],
+      trim: true,
+      maxlength: [40, 'A tour name must have less or equal then 40 characters'],
+      minlength: [10, 'A tour name must have more or equal then 10 characters'],
+      // validate: [validator.isAlpha, 'Tour name must only contain characters']
     },
     slug: String,
     duration: {
@@ -22,15 +24,18 @@ const tourSchema = new mongoose.Schema(
     },
     difficulty: {
       type: String,
-      required: [true, 'A tour should have a difficulty'],
-      enum: ['easy', 'medium', 'difficult'],
+      required: [true, 'A tour must have a difficulty'],
+      enum: {
+        values: ['easy', 'medium', 'difficult'],
+        message: 'Difficulty is either: easy, medium, difficult',
+      },
     },
     ratingsAverage: {
       type: Number,
-      default: 3.0,
-      min: [1, 'Rating must be below 1.0'],
+      default: 4.5,
+      min: [1, 'Rating must be above 1.0'],
       max: [5, 'Rating must be below 5.0'],
-      set: val => Math.round(val * 10) / 10,
+      set: val => Math.round(val * 10) / 10, // 4.666666, 46.6666, 47, 4.7
     },
     ratingsQuantity: {
       type: Number,
@@ -44,10 +49,10 @@ const tourSchema = new mongoose.Schema(
       type: Number,
       validate: {
         validator: function (val) {
-          // .this only points to cur doc on NEW doc creation
+          // this only points to current doc on NEW document creation
           return val < this.price;
         },
-        message: `Discount price ({VALUE}) should be below regular price`,
+        message: 'Discount price ({VALUE}) should be below regular price',
       },
     },
     summary: {
@@ -73,32 +78,31 @@ const tourSchema = new mongoose.Schema(
     secretTour: {
       type: Boolean,
       default: false,
-      select: false,
     },
     startLocation: {
-      //GeoJSON object
+      // GeoJSON
       type: {
         type: String,
-        default: 'Point', //Others (E.g. Polygon)
+        default: 'Point',
         enum: ['Point'],
       },
-      coordinates: [Number], //lng, lat
+      coordinates: [Number],
       address: String,
       description: String,
-      locations: [
-        {
-          type: {
-            type: String,
-            default: 'Point',
-            enum: ['Point'],
-          },
-          coordinates: [Number],
-          address: String,
-          description: String,
-          day: Number,
-        },
-      ],
     },
+    locations: [
+      {
+        type: {
+          type: String,
+          default: 'Point',
+          enum: ['Point'],
+        },
+        coordinates: [Number],
+        address: String,
+        description: String,
+        day: Number,
+      },
+    ],
     guides: [
       {
         type: mongoose.Schema.ObjectId,
@@ -107,7 +111,6 @@ const tourSchema = new mongoose.Schema(
     ],
   },
   {
-    //Include virtual when data gets outputted in JSON or object
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
   }

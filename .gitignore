@@ -5,3 +5,5 @@ node_modules
 oldapp.js
 config.env
 dev-data
+.parcel-cache
+.cache

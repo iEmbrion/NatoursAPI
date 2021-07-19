@@ -18,9 +18,9 @@ exports.getMe = (req, res, next) => {
 
 exports.updateMe = catchAsync(async (req, res, next) => {
   //Create error if user POSTs email data
-  if (req.body.email) {
-    return next(new AppError('You cannot update Your Email address', 400));
-  }
+  // if (req.body.email) {
+  //   return next(new AppError('You cannot update Your Email address', 400));
+  // }
 
   //Create error if user POSTs password data
   if (req.body.password || req.body.passwordConfirm)
@@ -32,7 +32,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     );
 
   //Filter unwanted fields
-  const filteredBody = filterObj(req.body, 'name');
+  const filteredBody = filterObj(req.body, 'name', 'email');
 
   //Update user doc
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
