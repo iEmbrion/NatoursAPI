@@ -1987,7 +1987,6 @@ var login = /*#__PURE__*/function () {
         switch (_context.prev = _context.next) {
           case 0:
             _context.prev = 0;
-            console.log("In Login");
             console.log(email, password);
             _context.next = 5;
             return (0, _axios.default)({
@@ -2003,7 +2002,6 @@ var login = /*#__PURE__*/function () {
             res = _context.sent;
 
             if (res.data.status === 'success') {
-              console.log("Logged in successfully!");
               window.setTimeout(function () {
                 location.assign('/');
               }, 1500);
