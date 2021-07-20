@@ -9,6 +9,7 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
+const cors = require('cors');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -27,6 +28,24 @@ app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
 // 1) GLOBAL MIDDLEWARES
+//Implement CORs
+//Access-Control-Allow-Origin: *
+app.use(cors());
+
+// E.g. to restrict origin
+// app.use(
+//   cors({
+//     origin: 'https://www.natours.com',
+//   })
+// );
+
+//To handle pre-flight phase of CORs. Note options is a http method
+//* is the route
+app.options('*', cors());
+
+// Example for route specific restriction during pre-flight
+// app.options('/api/v1/tours/:id', cors());
+
 // Serving static files
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -94,6 +113,9 @@ app.use((req, res, next) => {
 });
 
 // 3) ROUTES
+// E.g. Applying cors() to expose only specific routes
+// app.use('/', cors(), viewRouter);
+
 app.use('/', viewRouter);
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
