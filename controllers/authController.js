@@ -21,7 +21,12 @@ const createSendToken = (user, statusCode, res) => {
     ),
     httpOnly: true,
   };
-  if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
+
+  //in express, req.secure is set to true if https
+  //But heroku's proxy modifies the req object before reaching our app
+  //To make it work in heroku, check req.headers['x-forwarded-proto'] is set to https
+  if (req.secure || req.headers['x-forwarded-proto'] === 'https')
+    cookieOptions.secure = true;
 
   res.cookie('jwt', token, cookieOptions);
 

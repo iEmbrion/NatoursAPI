@@ -20,6 +20,9 @@ const viewRouter = require('./routes/viewRoutes');
 
 const app = express();
 
+//In authcontroller, it is reading a request header sent by Heroku's proxy server. Once that request reaches our app from their proxy, to read the headers set by the proxy, we need the middleware below.
+app.enable('trust proxy');
+
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
