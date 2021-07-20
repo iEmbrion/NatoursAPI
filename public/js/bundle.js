@@ -15040,7 +15040,7 @@ if (bookBtn) {
 }
 
 var alertMessage = document.querySelector('body').dataset.alert;
-if (alert) (0, _alert.showAlert)('success', alertMessage, 10);
+if (alertMessage) (0, _alert.showAlert)('success', alertMessage, 10);
 },{"core-js/stable":"../../node_modules/core-js/stable/index.js","regenerator-runtime/runtime":"../../node_modules/regenerator-runtime/runtime.js","./mapbox":"mapbox.js","./login":"login.js","./updateSettings":"updateSettings.js","./stripe":"stripe.js","./alert":"alert.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -15069,7 +15069,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59002" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54681" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
