@@ -13,7 +13,7 @@ const signToken = id => {
   });
 };
 
-const createSendToken = (user, statusCode, res) => {
+const createSendToken = (user, statusCode, req, res) => {
   const token = signToken(user);
   const cookieOptions = {
     expires: new Date(
@@ -56,12 +56,10 @@ exports.signup = catchAsync(async (req, res, next) => {
   const url = `${req.protocol}://${req.get('host')}/me`;
   await new Email(newUser, url).sendWelcome();
 
-  createSendToken(newUser, 201, res);
+  createSendToken(newUser, 201, req, res);
 });
 
 exports.login = catchAsync(async (req, res, next) => {
-  console.log('I am here');
-  console.log(`here is my request: ${req}`);
   const { email, password } = req.body;
 
   //Check if email & password exists
@@ -76,7 +74,7 @@ exports.login = catchAsync(async (req, res, next) => {
   }
 
   //If everything ok, send token to client
-  createSendToken(user, 200, res);
+  createSendToken(user, 200, req, res);
 });
 
 exports.logout = (req, res) => {
@@ -237,7 +235,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 
   //Update changePasswordAt property for the user
   //Log the user in, send JWT
-  createSendToken(user, 200, res);
+  createSendToken(user, 200, req, res);
 });
 
 exports.updatePassword = catchAsync(async (req, res, next) => {
@@ -257,5 +255,5 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   await user.save();
 
   //Log user in, send JWT
-  createSendToken(user, 200, res);
+  createSendToken(user, 200, req, res);
 });
