@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
+dotenv.config({
+  path: './config.env',
+});
+
 process.on('unhandledRejection', err => {
   console.log(`Unhandled Rejection: ${err.name}, ${err.message}`);
   console.log(err);
@@ -15,10 +19,6 @@ process.on('uncaughtException', err => {
 });
 
 const app = require('./app');
-
-dotenv.config({
-  path: './config.env',
-});
 
 const DB = process.env.DATABASE.replace(
   '<PASSWORD>',
